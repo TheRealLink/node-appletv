@@ -1,4 +1,4 @@
-import { Service } from 'mdns';
+const dnssd = require('dnssd2');
 import * as path from 'path';
 import { load, Message as ProtoMessage } from 'protobufjs'
 import { v4 as uuid } from 'uuid';
@@ -22,10 +22,10 @@ export class TVClient extends AppleTV {
 
   private pairingClient: PairingClient;
 
-  constructor(private service: Service, socket?: Socket) {
-    super(service.txtRecord.Name, service.port);
+  constructor(private service: any, socket?: Socket) {
+    super(service.txt.Name, service.port);
 
-    this.remoteUid = service.txtRecord.LocalAirPlayReceiverPairingIdentity;
+    this.remoteUid = service.txt.LocalAirPlayReceiverPairingIdentity;
     this.address = service.addresses.filter(x => x.includes('.'))[0];
     this.socket = socket || new Socket();
     this.pairingClient = new PairingClient(this);

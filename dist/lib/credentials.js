@@ -25,9 +25,9 @@ class Credentials {
     * @returns A string representation of a Credentials object.
     */
     toString() {
-        return this.localUid.toLowerCase()
+        return this.localUid
             + ":"
-            + this.remoteUid.toLowerCase()
+            + this.remoteUid
             + ":"
             + this.ltpk.toString('hex')
             + ":"

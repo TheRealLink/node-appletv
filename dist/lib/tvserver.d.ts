@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import * as mdns from 'mdns';
+declare const dnssd: any;
 import { Server, Socket } from 'net';
 import { AppleTV } from './appletv';
 import { PairingServer } from './pairing';
@@ -13,7 +13,7 @@ export interface Client {
     pairingServer?: PairingServer;
 }
 export declare class TVServer extends AppleTV {
-    advertisement: mdns.Advertisement;
+    advertisement: typeof dnssd.Advertisement;
     server: Server;
     clients: Client[];
     private credentialsStore;
@@ -25,3 +25,4 @@ export declare class TVServer extends AppleTV {
     private getClient;
     stop(): void;
 }
+export {};

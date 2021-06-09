@@ -1,10 +1,10 @@
 import { EventEmitter } from 'events';
-import * as mdns from 'mdns';
+const dnssd = require('dnssd2');
 
 import { TVClient } from './tvclient';
 
 export class Browser {
-  private browser: mdns.Browser;
+  private browser: typeof dnssd.Browser;
   private services: TVClient[];
   private uniqueIdentifier: string;
   private onComplete: (device: TVClient[]) => void;
@@ -15,12 +15,7 @@ export class Browser {
   * @param log  An optional function that takes a string to provide verbose logging.
   */
   constructor() {
-    let sequence = [
-      mdns.rst.DNSServiceResolve(),
-      'DNSServiceGetAddrInfo' in (<any>mdns).dns_sd ? mdns.rst.DNSServiceGetAddrInfo() : mdns.rst.getaddrinfo({ families: [4] }),
-      mdns.rst.makeAddressesUnique()
-    ];
-    this.browser = mdns.createBrowser(mdns.tcp('mediaremotetv'), { resolverSequence: sequence });
+    this.browser = dnssd.Browser(dnssd.tcp('mediaremotetv'));
     this.services = [];
 
     let that = this;

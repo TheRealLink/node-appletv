@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const dnssd = require('dnssd2');
 const path = require("path");
 const protobufjs_1 = require("protobufjs");
 const uuid_1 = require("uuid");
@@ -21,9 +22,9 @@ const message_1 = require("./message");
 const number_1 = require("./util/number");
 class TVClient extends appletv_1.AppleTV {
     constructor(service, socket) {
-        super(service.txtRecord.Name, service.port);
+        super(service.txt.Name, service.port);
         this.service = service;
-        this.remoteUid = service.txtRecord.LocalAirPlayReceiverPairingIdentity;
+        this.remoteUid = service.txt.LocalAirPlayReceiverPairingIdentity;
         this.address = service.addresses.filter(x => x.includes('.'))[0];
         this.socket = socket || new net_1.Socket();
         this.pairingClient = new pairing_1.PairingClient(this);

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mdns = require("mdns");
+const dnssd = require('dnssd2');
 const path = require("path");
 const os = require("os");
 const protobufjs_1 = require("protobufjs");
@@ -30,9 +30,9 @@ class TVServer extends appletv_1.AppleTV {
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.advertisement = mdns.createAdvertisement(mdns.tcp('mediaremotetv'), this.port, {
+            this.advertisement = new dnssd.Advertisement(dnssd.tcp('mediaremotetv'), this.port, {
                 name: this.name,
-                txtRecord: {
+                txt: {
                     Name: this.name,
                     UniqueIdentifier: this.uid,
                     SystemBuildVersion: '17K795',

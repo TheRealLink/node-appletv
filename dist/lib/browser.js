@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mdns = require("mdns");
+const dnssd = require('dnssd2');
 const tvclient_1 = require("./tvclient");
 class Browser {
     /**
@@ -8,12 +8,7 @@ class Browser {
     * @param log  An optional function that takes a string to provide verbose logging.
     */
     constructor() {
-        let sequence = [
-            mdns.rst.DNSServiceResolve(),
-            'DNSServiceGetAddrInfo' in mdns.dns_sd ? mdns.rst.DNSServiceGetAddrInfo() : mdns.rst.getaddrinfo({ families: [4] }),
-            mdns.rst.makeAddressesUnique()
-        ];
-        this.browser = mdns.createBrowser(mdns.tcp('mediaremotetv'), { resolverSequence: sequence });
+        this.browser = dnssd.Browser(dnssd.tcp('mediaremotetv'));
         this.services = [];
         let that = this;
         this.browser.on('serviceUp', function (service) {

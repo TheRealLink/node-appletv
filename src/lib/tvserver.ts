@@ -1,4 +1,4 @@
-import * as mdns from 'mdns';
+const dnssd = require('dnssd2');
 import * as path from 'path';
 import * as os from 'os';
 import { load, Message as ProtoMessage } from 'protobufjs'
@@ -25,7 +25,7 @@ export interface Client {
 }
 
 export class TVServer extends AppleTV {
-  public advertisement: mdns.Advertisement;
+  public advertisement: typeof dnssd.Advertisement;
   public server: Server;
   public clients: Client[] = [];
 
@@ -41,9 +41,9 @@ export class TVServer extends AppleTV {
   }
 
   async start(): Promise<this> {
-    this.advertisement = mdns.createAdvertisement(mdns.tcp('mediaremotetv'), this.port, {
+    this.advertisement = new dnssd.Advertisement(dnssd.tcp('mediaremotetv'), this.port, {
       name: this.name,
-      txtRecord: {
+      txt: {
         Name: this.name,
         UniqueIdentifier: this.uid,
         SystemBuildVersion: '17K795',

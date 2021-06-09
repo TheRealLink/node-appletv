@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import { Service } from 'mdns';
 import { Socket } from 'net';
 import { AppleTV, PlaybackQueueRequestOptions, SendProtocolMessageOptions, SendMessageOptions } from './appletv';
 import { Credentials } from './credentials';
@@ -12,7 +11,7 @@ export declare class TVClient extends AppleTV {
     remoteUid: string;
     credentials: Credentials;
     private pairingClient;
-    constructor(service: Service, socket?: Socket);
+    constructor(service: any, socket?: Socket);
     /**
     * Pair with an already discovered AppleTV.
     * @returns A promise that resolves to the AppleTV object.
